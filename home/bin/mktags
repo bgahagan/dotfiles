@@ -1,0 +1,3 @@
+#!/bin/bash
+# Make tags file recursively from current directory.
+ctags -R --exclude='*.js' --exclude='.build' --fields=+iaS --extra=+q .
