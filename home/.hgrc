@@ -1,0 +1,56 @@
+[ui]
+username = Bryan Gahagan <bryan@sortable.com>
+
+[extensions]
+hgext.extdiff =
+hgext.graphlog =
+hgk =
+color =
+transplant =
+hgext.fetch =
+mq =
+hgext.churn=
+record=
+rebase=
+hgext.bookmarks=
+hggit =
+
+[extdiff]
+cmd.vdiff = kdiff3
+
+[hooks]
+# http://mercurial.selenic.com/wiki/DiffstatOfPulledChanges
+#changegroup.1=hg log -r $HG_NODE:tip --template '{rev}, {date|age}, {author|person}: {desc|firstline}\n'
+#changegroup.1=hg log -M --stat -r $HG_NODE:tip --template '{rev}, {date|age}, {author|person}: {desc|firstline} [{branches} {tags}]\n'
+changegroup.1=hg log -M --stat -r $HG_NODE:tip --style /home/bryan/hg/map-cmdline.slog
+#changegroup.2=hg diff --stat -r $HG_NODE -r tip
+#changegroup.3=hg update
+#changegroup.3=hg rebase
+
+# Prevent "hg pull" if MQ patches are applied.
+prechangegroup.mq-no-pull = ! hg qtop > /dev/null 2>&1
+# Prevent "hg push" if MQ patches are applied.
+preoutgoing.mq-no-push = ! hg qtop > /dev/null 2>&1
+
+#Don't commit with new printlns
+#precommit.println= ! ( hg diff | grep "^+.*print[a-z]*(" | sed 's/+/Dont check in printlns jackass!\n/' )
+
+[alias]
+# Only push current branch
+nudge = push --rev .
+
+pr = pull --rebase
+
+#MQ stuff
+#qstatus = status --rev -2:.
+qstatus = status --rev qparent:.
+
+# Create a new stash
+stash = ! $HG qnew $@ && $HG qpop
+
+# Make the current queue a work
+unstash = ! $HG qpush && $HG qrefresh -X . && $HG qpop --force
+# qdelete $@
+
+[git]
+branch_bookmark_suffix=_git
