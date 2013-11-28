@@ -6,19 +6,20 @@ alias serve='python -m SimpleHTTPServer'
 
 alias grepall='find . -type f -print0 | xargs -0 grep -n --colour=auto'
 grepfile() {
-    local pattern="$1"
-      shift
-        find . -type f \( -path '*/target/*' -prune \) -o \( -name "$pattern" -print0 \) | xargs -0 grep -n --colour=auto "$@"
+  local pattern="$1"
+  shift
+  find . -type f \( -path '*/target/*' -prune \) -o \( -name "$pattern" -print0 \) |\
+    xargs -0 grep -n --colour=auto "$@"
 }
-alias grepclj='grepfile \*.clj'
-alias grepscala='grepfile \*.scala'
+alias grepclj="grepfile \*.clj"
+alias grepscala="grepfile \*.scala"
 
 alias mvn_notests="mvn -DskipTests install"
 alias mvn_jetty_prod="mvn -Drun.mode=production jetty:run"
 alias mvn_jetty_dev="mvn jetty:run"
 
 inw() {
-    while lein "$@" ; inotifywait -qq -r -e modify .; do
+    while "$@" ; inotifywait -qq -r -e modify .; do
       echo
     done
 }
