@@ -65,6 +65,7 @@ set si "Smart indet
 
 " Auto read files when they change
 set autoread
+au CursorHold * checktime "check for changes after and idle timeout
 
 " Spaces are better than a tab character
 set expandtab
@@ -183,6 +184,5 @@ au FileType clojure map <localleader>t :w<CR>:Require<CR>:Eval (user/test)<CR>
 au FileType clojure map <localleader>T :w<CR>:Require<CR>:Eval (user/test-all)<CR>
 
 "Ctrl-P Option
-"let g:ctrlp_cmd = 'CtrlPMixed'
-"let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_working_path_mode = 'c'
+let g:ctrlp_cmd = 'CtrlPMixed'
+let g:ctrlp_working_path_mode = 'a'
