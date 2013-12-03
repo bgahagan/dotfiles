@@ -13,10 +13,12 @@
   pp = !git pr && git push
   pd = !git pr && git push && ./build deploy -g HEAD
   unstash = stash pop
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-  lgtime = log --author=bryan --after=\"Feb 28, 2012\" --before=\"Jul 30, 2012\" --reverse --stat --color
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  lgtime = log --author=bryan --after=\"Feb 28, 2012\" --before=\"Jul 30, 2012\" --reverse --stat
+  di = diff --word-diff=color --stat -p
+
 [color]
-	ui = 0
+	ui = auto
 [diff]
 	tool = diffmerge
 [difftool "diffmerge"]
