@@ -134,6 +134,9 @@ let g:clipbrdDefaultReg = '+'
 " When I close a tab, remove the buffer
 set nohidden
 
+" Allow changing buffer even if unsaved
+set hidden
+
 " Set off the other paren
 "highlight MatchParen ctermbg=4
 
@@ -186,3 +189,47 @@ au FileType clojure map <localleader>T :w<CR>:Require<CR>:Eval (user/test-all)<C
 "Ctrl-P Option
 let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_working_path_mode = 'a'
+
+
+"##############################################################################
+" Mappings
+"##############################################################################
+"
+" Alt-] to open a tag in a new split
+"map <A-]> :sp <CR>:exec("tag ".expand("<cword>"))<CR>
+
+"set some mappings to easly cycle through buffers
+noremap <C-Tab> :bnext<CR>
+inoremap <C-Tab> <Esc>:bnext<CR>
+cnoremap <C-Tab> :bnext<CR>
+
+noremap <C-S-Tab> :bprev<CR>
+inoremap <C-S-Tab> <Esc>:bprev<CR>
+cnoremap <C-S-Tab> :bprev<CR>
+
+" a handy mapping to fix tabs and kill trailing whitespace
+map <F11> m`:retab<CR>:%s/\s\+$//eg<CR>``
+
+" a mapping to refresh the syntax colouring easily -- this is really only
+" useful when writing syntax files.
+map <F12> :syn sync fromstart<CR>
+
+"##############################################################################
+" Easier split navigation
+"##############################################################################
+
+" Use ctrl-[hjkl] to select the active split! (http://www.vim.org/tips/tip.php?tip_id=173)
+nmap <silent> <c-k> :wincmd k<CR>
+nmap <silent> <c-j> :wincmd j<CR>
+nmap <silent> <c-h> :wincmd h<CR>
+nmap <silent> <c-l> :wincmd l<CR>
+" faster splits and tabs
+map <leader>v :vsplit<CR>
+map <leader>s :split<CR>
+map <leader>c :close<CR>
+" open current split in new tab
+map <leader>t <C-W>T
+
+" Stuff stolen from vim-sensible: https://github.com/tpope/vim-sensible
+set viminfo^=!
+
