@@ -1,0 +1,15 @@
+[general]
+accounts = Gmail
+
+[Account Gmail]
+localrepository = Local
+remoterepository = Gmail
+
+[Repository Local]
+type = Maildir
+localfolders = ~/mail
+
+[Repository Gmail]
+type = Gmail
+#remotehost = imap.gmail.com:993
+remoteuser = bgahagan@gmail.com

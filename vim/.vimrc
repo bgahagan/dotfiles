@@ -75,9 +75,11 @@ set smarttab
 set shiftwidth=2
 set softtabstop=2
 
+set backupdir=~/.vim/backup/
 set backup
-set backupdir=~/.vim/backup
-set directory=~/.vim/tmp
+set directory=~/.vim/tmp//
+set undodir=~/vim/undo//
+set undofile
 
 " Use english for spellchecking, but don't spellcheck by default
 if version >= 700
@@ -189,7 +191,11 @@ au FileType clojure map <localleader>T :w<CR>:Require<CR>:Eval (user/test-all)<C
 "Ctrl-P Option
 let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_working_path_mode = 'a'
-
+let g:ctrlp_mruf_relative = 1
+let g:ctrlp_match_window = 'bottom,order:ttb,max:20'
+"noremap <C-[> :CtrlPBuffer<CR>
+"inoremap <C-[> :CtrlPBuffer<CR>
+"cnoremap <C-[> :CtrlPBuffer<CR>
 
 "##############################################################################
 " Mappings
