@@ -12,6 +12,7 @@ grepfile() {
     xargs -0 grep -n --colour=auto "$@"
 }
 alias grepclj="grepfile \*.clj"
+alias grepjs="grepfile \*.js"
 alias grepscala="grepfile \*.scala"
 
 alias mvn_notests="mvn -DskipTests install"

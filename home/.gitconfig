@@ -10,11 +10,14 @@
   in = !git fetch && git log master..FETCH_HEAD
   vdiff = difftool -y
   pr = pull --rebase
+  prs = pull --rebase sortable master
   pp = !git pr && git push
-  pd = !git pr && git push && ./build deploy -g HEAD
+  pps = !git prs && git push sortable
+  pd = !git pp && ./build deploy -g HEAD
+  pds = !git pps && ./build deploy -g HEAD
   unstash = stash pop
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-  lgtime = log --author=bryan --after=\"Feb 28, 2012\" --before=\"Jul 30, 2012\" --reverse --stat
+  lgtime = log --author=bgahagan --reverse --stat
   di = diff --word-diff=color --stat -p
 
 [color]
