@@ -188,14 +188,28 @@ au FileType clojure map <localleader>r :w<CR>:Eval (user/reset)<CR>
 au FileType clojure map <localleader>t :w<CR>:Require<CR>:Eval (user/test)<CR>
 au FileType clojure map <localleader>T :w<CR>:Require<CR>:Eval (user/test-all)<CR>
 
-"Ctrl-P Option
+"#################
+" Ctrl-P Options
+" ################
+"
+" Show buffers in results as well
 let g:ctrlp_cmd = 'CtrlPMixed'
+" Start search for current working dir
 let g:ctrlp_working_path_mode = 'a'
+" Most recently used first (I think?)
 let g:ctrlp_mruf_relative = 1
+" Show top 20 results
 let g:ctrlp_match_window = 'bottom,order:ttb,max:20'
 "noremap <C-[> :CtrlPBuffer<CR>
 "inoremap <C-[> :CtrlPBuffer<CR>
 "cnoremap <C-[> :CtrlPBuffer<CR>
+let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+      \ --ignore .git
+      \ --ignore .svn
+      \ --ignore .hg
+      \ --ignore .DS_Store
+      \ --ignore "**/*.pyc"
+      \ -g ""'
 
 "##############################################################################
 " Mappings
