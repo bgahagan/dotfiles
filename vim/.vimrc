@@ -78,7 +78,7 @@ set softtabstop=2
 set backupdir=~/.vim/backup/
 set backup
 set directory=~/.vim/tmp//
-set undodir=~/vim/undo//
+set undodir=~/.vim/undo//
 set undofile
 
 " Use english for spellchecking, but don't spellcheck by default
