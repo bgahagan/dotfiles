@@ -3,6 +3,7 @@
 	email = bgahagan@gmail.com
 [alias]
   ci = commit
+  ca = commit --amend
   co = checkout
   st = status -sb
   serve = instaweb -d webrick # requires ruby, leaves server process hanging around

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+DIRNAME=$(basename $(pwd))
+tmux rename-window $DIRNAME
+tmux splitw -h -p 50 
+tmux splitw -v -p 40
+tmux select-pane -t 0
