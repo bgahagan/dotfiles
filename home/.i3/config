@@ -179,5 +179,8 @@ exec --no-startup-id xsetroot -solid "#333333"
 bindsym $mod+c exec --no-startup-id tmux save-buffer - | xclip -i -selection clipboard
 bindsym $mod+v exec --no-startup-id "xclip -o | tmux load-buffer - ; tmux paste-buffer"
 
+# Default layout = tabbed
+workspace_layout tabbed
+
 # TODO lock, screen saver/screen off
 

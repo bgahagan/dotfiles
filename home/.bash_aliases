@@ -19,6 +19,8 @@ alias mvn_notests="mvn -DskipTests install"
 alias mvn_jetty_prod="mvn -Drun.mode=production jetty:run"
 alias mvn_jetty_dev="mvn jetty:run"
 
+alias g=git
+
 inw() {
     while "$@" ; inotifywait -qq -r -e modify .; do
       echo

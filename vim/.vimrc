@@ -75,6 +75,9 @@ set smarttab
 set shiftwidth=2
 set softtabstop=2
 
+" Force 2 paces for python
+au Filetype python setl et ts=2 sw=2
+
 set backupdir=~/.vim/backup/
 set backup
 set directory=~/.vim/tmp//
