@@ -8,7 +8,7 @@ alias grepall='find . -type f -print0 | xargs -0 grep -n --colour=auto'
 grepfile() {
   local pattern="$1"
   shift
-  find . -type f \( -path '*/target/*' -prune \) -o \( -name "$pattern" -print0 \) |\
+  find . -type f -a \( \( -path '*/target/*' -prune \) -o \( -name "$pattern" -print0 \) \) |\
     xargs -0 grep -n --colour=auto "$@"
 }
 alias grepclj="grepfile \*.clj"
