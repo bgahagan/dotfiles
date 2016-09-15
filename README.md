@@ -11,6 +11,7 @@ homeshick cd homeshick
 git checkout development
 homeshick clone bgahagan/dotfiles
 echo "source ~/.bashrc.common" >> ~/.bashrc
+vim +PluginInstall +qall
 ```
 
 
