@@ -6,3 +6,4 @@ target
 tags
 cp.txt
 .lein-repl-history
+node_modules

@@ -20,6 +20,8 @@
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   lgtime = log --author=bgahagan --reverse --stat
   di = diff --word-diff=color --stat -p
+  delete-branch = !git branch -d $1 && git push origin --delete $1
+  force-delete-branch = !git branch -D $1 && git push origin --delete $1
 
 [color]
 	ui = auto
