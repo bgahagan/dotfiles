@@ -19,6 +19,7 @@ Bundle 'majutsushi/tagbar'
 "Bundle 'FuzzyFinder'
 Bundle "kien/ctrlp.vim"
 Bundle 'tpope/vim-fugitive'
+Bundle 'elmcast/elm-vim'
 
 filetype plugin indent on
 
