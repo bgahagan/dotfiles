@@ -31,7 +31,7 @@ floating_modifier $mod
 bindsym $mod+Return exec --no-startup-id urxvt
 
 #lock
-bindsym Control+Mod1+l exec i3lock -c 333333
+bindsym Control+Mod1+l exec i3lock -d -c 333333
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -110,9 +110,9 @@ assign [instance="^Google-chrome$"] "1: www"
 assign [instance="^Google-chrome.*alt"] "3: www-alt"
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace number 1
-bindsym $mod+Shift+2 move container to workspace number 2
-bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+1 move container to workspace number 1: www
+bindsym $mod+Shift+2 move container to workspace number 2: dev
+bindsym $mod+Shift+3 move container to workspace number 3: www-alt
 bindsym $mod+Shift+4 move container to workspace number 4
 bindsym $mod+Shift+5 move container to workspace number 5
 bindsym $mod+Shift+6 move container to workspace number 6
