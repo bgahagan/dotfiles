@@ -24,6 +24,7 @@ Bundle 'mileszs/ack.vim'
 Bundle 'dracula/vim'
 Bundle 'nanotech/jellybeans.vim'
 Bundle 'rakr/vim-one'
+Plugin 'dyng/ctrlsf.vim'
 
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -248,6 +249,29 @@ let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
+
+"#################
+" CtrlSF Options
+" ################
+"
+let g:ctrlsf_auto_close = {
+    \ "normal" : 1,
+    \ "compact": 1
+    \}
+let g:ctrlsf_auto_focus = {
+    \ "at": "start"
+    \ }
+let g:ctrlsf_default_view_mode = 'compact'
+let g:ctrlsf_position = 'bottom'
+
+nmap     <C-F>f <Plug>CtrlSFPrompt
+vmap     <C-F>f <Plug>CtrlSFVwordPath
+vmap     <C-F>F <Plug>CtrlSFVwordExec
+nmap     <C-F>n <Plug>CtrlSFCwordPath
+nmap     <C-F>p <Plug>CtrlSFPwordPath
+nnoremap <C-F>o :CtrlSFOpen<CR>
+nnoremap <C-F>t :CtrlSFToggle<CR>
+inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
 
 "##############################################################################
 " Mappings
