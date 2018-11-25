@@ -38,3 +38,5 @@ export PAGER=less
 export LESS="-FRX"
 
 export EDITOR=vim
+
+export BC_ENV_ARGS="$HOME/.bc"

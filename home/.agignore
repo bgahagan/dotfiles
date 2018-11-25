@@ -7,3 +7,9 @@ tags
 cp.txt
 .lein-repl-history
 node_modules
+.git
+.svn
+.hg
+.DS_Store
+*/.pyc
+*.orig

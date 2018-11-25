@@ -15,6 +15,12 @@ alias grepclj="grepfile \*.clj"
 alias grepjs="grepfile \*.js"
 alias grepscala="grepfile \*.scala"
 
+inplace() {
+  local f=$1
+  shift
+  cat "$f" | "$@" | sponge "$f"
+}
+
 alias mvn_notests="mvn -DskipTests install"
 alias mvn_jetty_prod="mvn -Drun.mode=production jetty:run"
 alias mvn_jetty_dev="mvn jetty:run"
@@ -25,4 +31,8 @@ inw() {
     while "$@" ; inotifywait -qq -r -e modify .; do
       echo
     done
+}
+
+=() {
+  echo "$@" | bc
 }

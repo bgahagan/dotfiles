@@ -20,6 +20,13 @@ Bundle 'majutsushi/tagbar'
 Bundle "kien/ctrlp.vim"
 Bundle 'tpope/vim-fugitive'
 Bundle 'elmcast/elm-vim'
+Bundle 'mileszs/ack.vim'
+Bundle 'dracula/vim'
+Bundle 'nanotech/jellybeans.vim'
+Bundle 'rakr/vim-one'
+
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 filetype plugin indent on
 
@@ -115,6 +122,8 @@ set mat=2 "How many tenths of a second to blink
 
 " Line Numbers PWN!
 "set number
+"set numberwidth=3
+set cursorline          " highlight current line
 
 " Ignoring case is a fun trick
 set ignorecase
@@ -149,17 +158,37 @@ set hidden
 
 " Favorite Color Scheme
 if has("gui_running")
-   colorscheme inkpot
-   " Remove Toolbar
-   set guioptions-=T
-   "Terminus is AWESOME
-   set guifont=Terminus\ 9
+  "colorscheme inkpot
+  colorscheme dracula
+  " Remove Toolbar
+  set guioptions-=T
+  "Terminus is AWESOME
+  set guifont=Terminus\ 9
 else
-  " colorscheme metacosm
-  colorscheme zellner
-  set background=dark
 
-  set nonu
+  if &term =~# '256color'
+    "let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    "let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    set t_8f=[38;2;%lu;%lu;%lum        " set foreground color
+    set t_8b=[48;2;%lu;%lu;%lum        " set background color
+    set t_Co=256
+    set termguicolors
+  endif
+  "set background=dark
+  " colorscheme metacosm
+  " colorscheme zellner
+  let g:jellybeans_overrides = {
+  \    'background': { 'ctermbg': 'none', '256ctermbg': 'none' },
+  \}
+  colorscheme jellybeans
+  let g:airline_theme='jellybeans'
+  "let g:airline#extensions#tabline#enabled = 1
+  "if (has("termguicolors"))
+  "  set termguicolors
+  "endif
+  "colorscheme one
+  "set background=dark
+
 endif
 
 " Search mappings: These will make it so that going to the next one in a
@@ -208,12 +237,17 @@ let g:ctrlp_match_window = 'bottom,order:ttb,max:20'
 "inoremap <C-[> :CtrlPBuffer<CR>
 "cnoremap <C-[> :CtrlPBuffer<CR>
 let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-      \ --ignore .git
-      \ --ignore .svn
-      \ --ignore .hg
-      \ --ignore .DS_Store
-      \ --ignore "**/*.pyc"
       \ -g ""'
+
+
+"#################
+" Ack Options
+" ################
+"
+" Use ag if availiable
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
 
 "##############################################################################
 " Mappings
