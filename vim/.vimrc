@@ -20,7 +20,7 @@ Plugin 'gmarik/vundle'
 Plugin 'tpope/vim-sensible'
 Plugin 'derekwyatt/vim-scala'
 Plugin 'tpope/vim-markdown'
-Plugin 'kien/ctrlp.vim'
+"Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'mileszs/ack.vim'
@@ -322,4 +322,17 @@ map <leader>t <C-W>T
 " ## FZF config ##
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
+
+"   :Ag  - Start fzf with hidden preview window that can be enabled with "?" key
+"   :Ag! - Start fzf in fullscreen and display the preview window above
+command! -bang -nargs=* Ag
+  \ call fzf#vim#ag(<q-args>,
+  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \                 <bang>0)
+
+" Bind Ctrl-P to Files search
+noremap <C-P> :Files<CR>
+inoremap <C-P> <Esc>:Files<CR>
+cnoremap <C-P> :Files<CR>
 
