@@ -3,32 +3,36 @@ filetype off                      " required by Vundle
 
 " Use Vundle to manage plugins: https://github.com/gmarik/vundle
 set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+call vundle#begin()
 " Vundle needs to manage itself
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 
-Bundle 'derekwyatt/vim-scala'
-Bundle 'plasticboy/vim-markdown'
-Bundle 'tpope/vim-fireplace'
-Bundle 'overthink/vim-classpath'
-Bundle 'guns/vim-clojure-static'
-Bundle 'ervandew/supertab'
-Bundle 'majutsushi/tagbar'
+"Bundle 'tpope/vim-fireplace'
+"Bundle 'overthink/vim-classpath'
+"Bundle 'guns/vim-clojure-static'
+"Bundle 'ervandew/supertab'
+"Bundle 'majutsushi/tagbar'
 "Bundle 'xolox/vim-session.git'
 "Bundle 'L9'
 "Bundle 'FuzzyFinder'
-Bundle "kien/ctrlp.vim"
-Bundle 'tpope/vim-fugitive'
-Bundle 'elmcast/elm-vim'
-Bundle 'mileszs/ack.vim'
-Bundle 'dracula/vim'
-Bundle 'nanotech/jellybeans.vim'
-Bundle 'rakr/vim-one'
-Plugin 'dyng/ctrlsf.vim'
-
+"Bundle 'elmcast/elm-vim'
+"Plugin 'dyng/ctrlsf.vim'
+Plugin 'tpope/vim-sensible'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'tpope/vim-markdown'
+Plugin 'kien/ctrlp.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'mileszs/ack.vim'
+Plugin 'dracula/vim'
+Plugin 'nanotech/jellybeans.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'tmux-plugins/vim-tmux-focus-events'
+Plugin 'roxma/vim-tmux-clipboard'
 
+" All of your Plugins must be added before the following line
+call vundle#end()
 filetype plugin indent on
 
 syntax on
@@ -74,7 +78,8 @@ set si "Smart indet
 
 " Auto read files when they change
 set autoread
-au CursorHold * checktime "check for changes after and idle timeout
+au CursorHold * :silent! checktime "check for changes after and idle timeout
+au FocusGained,BufEnter * :silent! checktime " reload when entering the buffer or gaining focus
 
 " Spaces are better than a tab character
 set expandtab
@@ -88,8 +93,9 @@ set softtabstop=2
 au Filetype python setl et ts=2 sw=2
 
 set backupdir=~/.vim/backup/
-set backup
+set nobackup
 set directory=~/.vim/tmp//
+set noswapfile
 set undodir=~/.vim/undo//
 set undofile
 
@@ -187,7 +193,6 @@ else
   "if (has("termguicolors"))
   "  set termguicolors
   "endif
-  "colorscheme one
   "set background=dark
 
 endif
@@ -264,14 +269,14 @@ let g:ctrlsf_auto_focus = {
 let g:ctrlsf_default_view_mode = 'compact'
 let g:ctrlsf_position = 'bottom'
 
-nmap     <C-F>f <Plug>CtrlSFPrompt
-vmap     <C-F>f <Plug>CtrlSFVwordPath
-vmap     <C-F>F <Plug>CtrlSFVwordExec
-nmap     <C-F>n <Plug>CtrlSFCwordPath
-nmap     <C-F>p <Plug>CtrlSFPwordPath
-nnoremap <C-F>o :CtrlSFOpen<CR>
-nnoremap <C-F>t :CtrlSFToggle<CR>
-inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
+"nmap     <C-F>f <Plug>CtrlSFPrompt
+"vmap     <C-F>f <Plug>CtrlSFVwordPath
+"vmap     <C-F>F <Plug>CtrlSFVwordExec
+"nmap     <C-F>n <Plug>CtrlSFCwordPath
+"nmap     <C-F>p <Plug>CtrlSFPwordPath
+"nnoremap <C-F>o :CtrlSFOpen<CR>
+"nnoremap <C-F>t :CtrlSFToggle<CR>
+"inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
 
 "##############################################################################
 " Mappings
