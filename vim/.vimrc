@@ -30,6 +30,8 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'roxma/vim-tmux-clipboard'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()
@@ -211,14 +213,14 @@ set formatoptions+=l      " Don't break and auto-format long lines.
 set formatoptions-=t      " Don't autoformat shit
 
 " SuperTab config
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<C-x><C-o>"
-let g:SuperTabClosePreviewOnPopupClose = 1
-au FileType *
-  \ if &omnifunc != '' |
-  \   call SuperTabChain(&omnifunc, "<c-x><c-n>") |
-  \   call SuperTabSetDefaultCompletionType("<c-x><c-o>") |
-  \ endif
+"let g:SuperTabDefaultCompletionType = "context"
+"let g:SuperTabContextDefaultCompletionType = "<C-x><C-o>"
+"let g:SuperTabClosePreviewOnPopupClose = 1
+"au FileType *
+"  \ if &omnifunc != '' |
+"  \   call SuperTabChain(&omnifunc, "<c-x><c-n>") |
+"  \   call SuperTabSetDefaultCompletionType("<c-x><c-o>") |
+"  \ endif
 
 " vim-fireplace clojure mappings
 au FileType clojure map <localleader>q :w<CR>:Require!<CR>
@@ -317,6 +319,7 @@ map <leader>c :close<CR>
 " open current split in new tab
 map <leader>t <C-W>T
 
-" Stuff stolen from vim-sensible: https://github.com/tpope/vim-sensible
-set viminfo^=!
+" ## FZF config ##
+" [Buffers] Jump to the existing window if possible
+let g:fzf_buffers_jump = 1
 

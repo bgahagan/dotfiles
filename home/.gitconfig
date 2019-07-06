@@ -17,7 +17,7 @@
   pd = !git pp && ./build deploy -g HEAD
   pds = !git pps && ./build deploy -g HEAD
   unstash = stash pop
-  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  lg = log --graph --date=short --pretty=format:'%C(green)%cd %C(auto)%h%d %s %C(bold blue)<%an>%C(reset)' --abbrev-commit
   lgtime = log --author=bgahagan --reverse --stat
   di = diff --word-diff=color --stat -p
   delete-branch = !git branch -d $1 && git push origin --delete $1
