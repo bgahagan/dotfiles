@@ -47,3 +47,5 @@
 	default = current
 [core]
 	editor = vim
+[commit]
+	verbose = true
