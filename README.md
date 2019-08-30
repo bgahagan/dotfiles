@@ -12,6 +12,10 @@ echo "source ~/.bashrc.common" >> ~/.bashrc
 vim +PluginInstall +qall
 ```
 
+Setup [GnuPGP agent forwarding](https://wiki.gnupg.org/AgentForwarding)
+```
+echo "StreamLocalBindUnlink yes" | sudo tee -a /etc/ssh/sshd_config
+```
 
 Ubuntu Packages
 ---------------
