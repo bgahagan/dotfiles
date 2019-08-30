@@ -1,6 +1,6 @@
 [user]
 	name = Bryan Gahagan
-	email = bgahagan@gmail.com
+	email = git@bgahagan.dev
 [alias]
   ci = commit
   ca = commit --amend
