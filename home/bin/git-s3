@@ -1,0 +1,70 @@
+#!/bin/bash
+
+set -euo pipefail
+
+[ -f $HOME/.git-s3 ] && . $HOME/.git-s3
+
+if [ -z "${S3_ROOT:-}" ] ; then
+  echo "define S3_ROOT in ~/.git-s3"
+  echo "example:"
+  echo '$ echo "S3_ROOT=s3://my-bucket/git" > ~/.git-s3'
+  exit 1
+fi
+
+backup() {
+  local repo_dir=${1:-$(pwd)}
+  local repo_name=${2:-$(basename $repo_dir)}
+
+  if ! [ -d "${repo_dir}/.git" ]; then
+    echo "$repo_dir doesn't look like a git repo"
+    return 1
+  fi
+
+  local gpg_user=$(git config user.email)
+  local f=$(mktemp --tmpdir git-backup.XXXX)
+  cd "$repo_dir"
+  git bundle create "$f" --all
+  gpg -r "$gpg_user" -e "$f"
+  rm "$f"
+  S3_PATH="${S3_ROOT}/${repo_name}.git.bundle"
+  echo "Backing up $repo_name from $repo_dir to $S3_PATH"
+  (cd $(dirname "$f") && aws s3 cp $(basename "${f}.gpg") "$S3_PATH")
+  rm "$f".gpg
+}
+
+restore() {
+  local repo_name=$1
+  local repo_dir=${2:-$repo_name}
+
+  if [ -e "${repo_dir}" ]; then
+    echo "$repo_dir already exists (can't restore to it)"
+    return 1
+  fi
+
+  local f=$(mktemp --tmpdir git-restore.XXXX)
+  S3_PATH="${S3_ROOT}/${repo_name}.git.bundle"
+  echo "Restore $repo_name from $S3_PATH to $repo_dir"
+  (cd $(dirname "$f") && aws s3 cp "$S3_PATH" $(basename "${f}.gpg"))
+  gpg -d "$f".gpg
+  rm "$f".gpg
+  git clone "$f" "$repo_dir"
+  rm "$f"
+}
+
+CMD=${1:-}
+shift || { echo "$0: must specify a command"; exit 1; }
+
+if [ "$CMD" = "restore" ]; then
+
+  restore "$@"
+
+elif [ "$CMD" = "backup" ]; then
+  
+  backup "$@"
+
+else
+  
+  echo "$0: Unkonwn command: $CMD"
+  exit 1
+
+fi
