@@ -28,7 +28,7 @@ alias mvn_jetty_dev="mvn jetty:run"
 alias g=git
 
 inw() {
-    while "$@" ; inotifywait -qq -r -e modify .; do
+    while "$@" ; inotifywait -qq -r -e modify .; sleep 0.2; do
       echo
     done
 }
