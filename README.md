@@ -1,29 +1,19 @@
 Dotfiles
 ========
 
-installation
-------------
+Initial setup
+-------------
 
-Ubuntu Packages
 ```
-sudo apt install \
-  git \
-  tmux \
-  inotify-tools \
-  silversearcher-ag
+curl -sSf https://raw.githubusercontent.com/bgahagan/dotfiles/master/home/bin/setup-my-env.sh | bash -s vim
 ```
 
-Dotfiles
-```
-git clone git://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
-source "$HOME/.homesick/repos/homeshick/homeshick.sh"
-homeshick clone bgahagan/dotfiles
-echo "source ~/.bashrc.common" >> ~/.bashrc
-vim +PluginInstall +qall
-source ~/.bashrc.common
-```
+Then install additional apps with `setup-my-env.sh <app>`
 
-Setup [GnuPGP agent forwarding](https://wiki.gnupg.org/AgentForwarding)
+GPG Agent
+---------
+
+Setup [GnuPGP agent forwarding](https://wiki.gnupg.org/AgentForwarding) on ssh target machines
 ```
 echo "StreamLocalBindUnlink yes" | sudo tee -a /etc/ssh/sshd_config
 ```
