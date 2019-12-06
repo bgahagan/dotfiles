@@ -5,7 +5,7 @@ set -eu -o pipefail
 
 base_setup() {
   for app in git wget curl; do
-    if ! type $app > /dev/null ; then
+    if ! type $app 2>/dev/null ; then
       echo "$app not installed; aborting"
       exit 1
     fi
@@ -21,20 +21,19 @@ base_setup() {
     echo "Installing dotfiles"
     homeshick clone bgahagan/dotfiles
     echo "source ~/.bashrc.common" >> ~/.bashrc
-    source ~/.bashrc.common
   fi
 
-  if ! type inotifywatch >/dev/null ; then
+  if ! type inotifywatch 2>/dev/null ; then
     sudo apt install -y inotify-tools
   fi
 
-  if ! type ag >/dev/null ; then
+  if ! type ag 2>/dev/null ; then
     sudo apt install -y silversearcher-ag
   fi
 }
 
 install_vim() {
-  if type vim >/dev/null ; then 
+  if type vim 2>/dev/null ; then 
     echo "Installing vim plugins"
     vim +PluginInstall +qall
   else
@@ -43,7 +42,7 @@ install_vim() {
 }
 
 install_git_remote_s3() {
-  if ! type git-remote-s3 >/dev/null ; then 
+  if ! type git-remote-s3 2>/dev/null ; then 
     echo "Installing git-remote-s3"
     wget 'https://github.com/bgahagan/git-remote-s3/releases/download/v0.1.2/git-remote-s3-x86_64-unknown-linux-gnu.gz' -O /tmp/git-remote-s3.gz
     gunzip /tmp/git-remote-s3.gz
@@ -52,7 +51,7 @@ install_git_remote_s3() {
 }
 
 install_hub() {
-  if ! type hub >/dev/null ; then 
+  if ! type hub 2>/dev/null ; then 
     echo "Installing hub"
     wget 'https://github.com/github/hub/releases/download/v2.13.0/hub-linux-arm64-2.13.0.tgz' -O /tmp/hub.gz
     gunzip /tmp/hub.gz
@@ -61,20 +60,20 @@ install_hub() {
 }
 
 install_node() {
-  if ! type n >/dev/null ; then 
+  if ! type n 2>/dev/null ; then 
     echo "Installing n (node version manager)"
-    curl -L https://git.io/n-install | bash -s -- latest
+    curl -sSf -L https://git.io/n-install | bash -s -- latest
   fi
 }
 
 install_rust() {
-  if ! type rustup >/dev/null ; then 
+  if ! type rustup 2>/dev/null ; then 
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
   fi
 }
 
 install_go() {
-  if ! type go >/dev/null ; then 
+  if ! type go 2>/dev/null ; then 
     sudo add-apt-repository ppa:longsleep/golang-backports
     sudo apt-get update
     sudo apt-get install golang-go
@@ -82,7 +81,7 @@ install_go() {
 }
 
 install_tmux() {
-  if ! type tmux >/dev/null ; then
+  if ! type tmux 2>/dev/null ; then
     sudo apt install -y tmux
   fi
 }

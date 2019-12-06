@@ -5,7 +5,8 @@ Initial setup
 -------------
 
 ```
-curl -sSf https://raw.githubusercontent.com/bgahagan/dotfiles/master/home/bin/setup-my-env.sh | bash -s vim
+sudo apt install -y curl wget git
+bash <(curl -sSf https://raw.githubusercontent.com/bgahagan/dotfiles/master/home/bin/setup-my-env.sh) vim
 ```
 
 Then install additional apps with `setup-my-env.sh <app>`
