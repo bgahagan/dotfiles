@@ -30,6 +30,13 @@ base_setup() {
   if ! type ag 2>/dev/null ; then
     sudo apt install -y silversearcher-ag
   fi
+
+  if ! type gpg 2>/dev/null ; then
+    sudo apt install -y gpg
+    curl -sSf https://gahagan.ca/bgahagan.gpg | gpg --import
+    ## Trust the imported key
+    echo -e "trust\n5\ny\nquit" | gpg --command-fd 0 --edit-key 9E8C0FEC3789E6F3CF4B8FD96FFAF1538F282F76
+  fi
 }
 
 install_vim() {
@@ -51,6 +58,19 @@ install_git_remote_s3() {
     wget 'https://github.com/bgahagan/git-remote-s3/releases/download/v0.1.2/git-remote-s3-x86_64-unknown-linux-gnu.gz' -O /tmp/git-remote-s3.gz
     gunzip /tmp/git-remote-s3.gz
     mv /tmp/git-remote-s3 ~/bin/git-remote-s3
+    chmod u+x ~/bin/git-remote-s3
+  fi
+}
+
+install_docker() {
+  if ! type docker 2>/dev/null ; then 
+    echo "Installing docker"
+    sudo apt install -y docker.io
+  fi
+  if ! [ -e ~/bin/docker-compose ] ; then
+    echo "Installing docker-compose"
+    wget https://github.com/docker/compose/releases/download/1.25.0/docker-compose-`uname -s`-`uname -m` -O ~/bin/docker-compose
+    chmod u+x ~/bin/docker-compose
   fi
 }
 
@@ -60,6 +80,7 @@ install_hub() {
     wget 'https://github.com/github/hub/releases/download/v2.13.0/hub-linux-arm64-2.13.0.tgz' -O /tmp/hub.gz
     gunzip /tmp/hub.gz
     mv /tmp/hub ~/bin/hub
+    chmod u+x ~/bin/hub
   fi
 }
 
