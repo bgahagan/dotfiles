@@ -32,7 +32,11 @@ Plugin 'tmux-plugins/vim-tmux-focus-events'
 Plugin 'roxma/vim-tmux-clipboard'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+Plugin 'pbogut/fzf-mru.vim'
 Plugin 'rust-lang/rust.vim'
+Plugin 'svermeulen/vim-cutlass' "Delete operations are sent to the black hole register
+"Plugin 'ryanpcmcquen/fix-vim-pasting' "Enter paste mode when pasting from terminal/tmux
+Plugin 'chrisjohnson/vim8-bracketed-paste-mode-tmux'
 
 " All of your Plugins must be added before the following line
 call vundle#end()
@@ -337,3 +341,8 @@ noremap <C-P> :Files<CR>
 inoremap <C-P> <Esc>:Files<CR>
 cnoremap <C-P> :Files<CR>
 
+" cutlass changes dd be delete rather than cut. re-add a cut(move) key
+nnoremap m d
+xnoremap m d
+nnoremap mm dd
+nnoremap M D
