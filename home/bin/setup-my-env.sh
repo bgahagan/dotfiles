@@ -20,6 +20,7 @@ base_setup() {
   if ! grep -q "source ~/.bashrc.common" ~/.bashrc ; then
     echo "Installing dotfiles"
     homeshick -b clone bgahagan/dotfiles
+    homeshick -b link dotfiles
     echo "source ~/.bashrc.common" >> ~/.bashrc
   fi
 
@@ -40,12 +41,12 @@ base_setup() {
 }
 
 install_vim() {
-  if type vim 2>/dev/null ; then 
-    echo "Installing vim plugins"
-    vim +PluginInstall +qall
-  else
-    echo "Warning: vim not installed; skipping plugins"
+  if ! type vim 2>/dev/null ; then
+    sudo apt install -y vim
   fi
+
+  echo "Installing vim plugins"
+  vim +PluginInstall +qall
 
   if ! type fzf 2>/dev/null ; then 
     $HOME/.vim/bundle/fzf/install --all --key-bindings --completion --update-rc --no-zsh --no-fish
