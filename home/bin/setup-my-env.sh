@@ -108,6 +108,7 @@ install_go() {
 install_tmux() {
   if ! type tmux 2>/dev/null ; then
     sudo apt install -y tmux
+    ~/.tmux/plugins/tpm/bin/install_plugins
   fi
 }
 
