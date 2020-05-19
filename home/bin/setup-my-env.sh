@@ -20,6 +20,7 @@ base_setup() {
   if ! grep -q "source ~/.bashrc.common" ~/.bashrc ; then
     echo "Installing dotfiles"
     homeshick -b clone bgahagan/dotfiles
+    homeshick -b link dotfiles
     echo "source ~/.bashrc.common" >> ~/.bashrc
   fi
 
@@ -29,6 +30,10 @@ base_setup() {
 
   if ! type ag 2>/dev/null ; then
     sudo apt install -y silversearcher-ag
+  fi
+  
+  if ! type vim 2>/dev/null ; then
+    sudo apt install -y vim
   fi
 }
 
