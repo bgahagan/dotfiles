@@ -30,7 +30,7 @@ font xft:URWGothic-Book 14
 floating_modifier $mod
 
 ## Launch // Terminal // <> Enter ##
-bindsym $mod+Return exec terminal
+bindsym $mod+Return exec alacritty
 
 ## Launch // Firefox // <><Shift> Enter ##
 bindsym $mod+Shift+Return exec firefox -P bryan
