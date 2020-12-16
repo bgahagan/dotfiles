@@ -33,7 +33,8 @@
 [difftool "diffmerge"]
 	cmd = diffmerge \"$LOCAL\" \"$REMOTE\"
 [merge]
-        tool = meld
+        tool = vimdiff
+	conflictstyle = diff3
 [mergetool "meld"]
         cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
 [mergetool "diffmerge"]
@@ -45,3 +46,5 @@
 	editor = vim
 [commit]
 	verbose = true
+[mergetool]
+	keepBackup = false
