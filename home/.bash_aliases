@@ -3,6 +3,7 @@
 alias ppjson='python -mjson.tool'
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1])"'
 alias serve='python -m SimpleHTTPServer'
+alias serve3='python3 -m http.server'
 
 alias grepall='find . -type f -print0 | xargs -0 grep -n --colour=auto'
 grepfile() {
