@@ -11,6 +11,7 @@
   in = !git fetch && git log master..FETCH_HEAD
   vdiff = difftool -y
   pr = pull --rebase
+  pa = push --all
   pp = !git pr && git push
   unstash = stash pop
   lg = log --graph --date=short --pretty=format:'%C(green)%cd %C(auto)%h%d %s %C(bold blue)<%an>%C(reset)' --abbrev-commit
@@ -48,3 +49,5 @@
 	verbose = true
 [mergetool]
 	keepBackup = false
+[init]
+	defaultBranch = main
