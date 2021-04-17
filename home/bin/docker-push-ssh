@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Push an tag from the local repo to another machine over ssh
+
+TAG=${1:?specify tag}
+REMOTE=${2:?specify remote host}
+
+docker save "$TAG" | bzip2 | pv | ssh "$REMOTE" 'bunzip2 | docker load'
