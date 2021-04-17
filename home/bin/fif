@@ -1,0 +1,54 @@
+#!/bin/bash
+
+##
+# Find In Files ( FIF )
+# * Search accross multiple files
+# * Preview with context
+# * Edit the selected file(s) in vim
+#
+# Requires
+# - fzf
+# - bat
+# - ag
+##
+
+set -euo pipefail
+
+SEARCH_ARGS="$*"
+
+fif_find() {
+  local query="$1"
+  shift
+  if [[ ${#query} -gt 1 ]]; then
+    #rg --line-number --no-heading --color=always --smart-case "$query"
+    ag $* --no-group --color --smart-case "$query"
+  fi
+}
+
+fif_preview() {
+  local file="$1"
+  local line="$2"
+  bat --style=numbers --paging=never --color=always -H "$line" "$file"
+}
+
+export -f fif_preview
+export -f fif_find
+export SEARCH_ARGS
+
+fif_fzf() {
+  FZF_DEFAULT_COMMAND="fif_find ''" \
+    fzf --bind "change:reload:fif_find {q} $SEARCH_ARGS || true" \
+        -d ':' --ansi --disabled \
+        --preview-window ':+{2}/2' \
+        --preview "fif_preview {1} {2}"
+}
+
+ARGS=( )
+
+while IFS=":" read -r f line col _ ; do
+  ARGS+=( "$f" "+$line" )
+done < <( fif_fzf "${1:-}" )
+
+if [[ ${#ARGS[@]} -ge 1 ]]; then
+  vim ${ARGS[@]}
+fi
