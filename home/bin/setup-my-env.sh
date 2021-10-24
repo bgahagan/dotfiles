@@ -2,14 +2,58 @@
 
 set -eu -o pipefail
 
+install_package() {
+
+  local -a POSITIONAL
+  local key
+  local apt_package
+  local fii=false
+
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+
+    case $key in
+      -f|--fail-if-installed)
+        fii=true
+        shift # past argument
+        ;;
+      -a|--apt)
+        apt_package="$2"
+        shift # past argument
+        shift # past value
+        ;;
+      *)    # unknown option
+        POSITIONAL+=("$1") # save it in an array for later
+        shift # past argument
+        ;;
+    esac
+  done
+  set -- "${POSITIONAL[@]}" # restore positional parameters
+
+  local executable=$1
+
+  if ! type $executable &>/dev/null ; then
+    echo "Intalling $executable"
+    if type apt; then
+      sudo apt install -y ${apt_package:-$executable}
+    fi
+    if ! type $executable &>/dev/null ; then
+      echo "ERROR: $executable: could not intall"
+      return 1
+    fi
+  else
+    if [ "$fii" = "true" ]; then
+      # Fail becuase the program was already installed
+      return 1
+    fi
+  fi
+}
 
 base_setup() {
-  for app in git wget curl; do
-    if ! type $app 2>/dev/null ; then
-      echo "$app not installed; aborting"
-      exit 1
-    fi
-  done
+
+  install_package git
+  install_package wget
+  install_package curl
 
   if ! [ -d $HOME/.homesick/repos/homeshick ]; then
     echo "Installing homeshick"
@@ -24,37 +68,32 @@ base_setup() {
     echo "source ~/.bashrc.common" >> ~/.bashrc
   fi
 
-  if ! type inotifywatch 2>/dev/null ; then
-    sudo apt install -y inotify-tools
-  fi
+  install_package inotifywatch --apt inotify-tools || true
+  install_package ag --apt silversercher-ag || true
+  install_package socat || true
 
-  if ! type ag 2>/dev/null ; then
-    sudo apt install -y silversearcher-ag
-  fi
-
-  if ! type gpg 2>/dev/null ; then
-    sudo apt install -y gpg
-    curl -sSf https://gahagan.ca/bgahagan.gpg | gpg --import
-    ## Trust the imported key
-    echo -e "trust\n5\ny\nquit" | gpg --command-fd 0 --edit-key 9E8C0FEC3789E6F3CF4B8FD96FFAF1538F282F76
+  if install_package gpg; then
+    if ! gpg -k bgahagan >/dev/null ; then
+      curl -sSf https://gahagan.ca/bgahagan.gpg | gpg --import
+      ## Trust the imported key
+      echo -e "trust\n5\ny\nquit" | gpg --command-fd 0 --edit-key 9E8C0FEC3789E6F3CF4B8FD96FFAF1538F282F76
+    fi
   fi
 }
 
 install_vim() {
-  if ! type vim 2>/dev/null ; then
-    sudo apt install -y vim
-  fi
+  install_package vim
 
   echo "Installing vim plugins"
   vim +PluginInstall +qall
 
-  if ! type fzf 2>/dev/null ; then 
+  if ! type fzf &>/dev/null ; then 
     $HOME/.vim/bundle/fzf/install --all --key-bindings --completion --update-rc --no-zsh --no-fish
   fi
 }
 
 install_git_remote_s3() {
-  if ! type git-remote-s3 2>/dev/null ; then 
+  if ! type git-remote-s3 &>/dev/null ; then 
     echo "Installing git-remote-s3"
     wget 'https://github.com/bgahagan/git-remote-s3/releases/download/v0.1.2/git-remote-s3-x86_64-unknown-linux-gnu.gz' -O /tmp/git-remote-s3.gz
     gunzip /tmp/git-remote-s3.gz
@@ -64,7 +103,7 @@ install_git_remote_s3() {
 }
 
 install_docker() {
-  if ! type docker 2>/dev/null ; then 
+  if ! type docker &>/dev/null ; then 
     echo "Installing docker"
     sudo apt install -y docker.io
   fi
@@ -76,7 +115,7 @@ install_docker() {
 }
 
 install_hub() {
-  if ! type hub 2>/dev/null ; then 
+  if ! type hub &>/dev/null ; then 
     echo "Installing hub"
     wget 'https://github.com/github/hub/releases/download/v2.13.0/hub-linux-arm64-2.13.0.tgz' -O /tmp/hub.gz
     gunzip /tmp/hub.gz
@@ -86,20 +125,20 @@ install_hub() {
 }
 
 install_node() {
-  if ! type n 2>/dev/null ; then 
+  if ! type n &>/dev/null ; then 
     echo "Installing n (node version manager)"
     curl -sSf -L https://git.io/n-install | bash -s -- latest
   fi
 }
 
 install_rust() {
-  if ! type rustup 2>/dev/null ; then 
+  if ! type rustup &>/dev/null ; then 
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
   fi
 }
 
 install_go() {
-  if ! type go 2>/dev/null ; then 
+  if ! type go &>/dev/null ; then 
     sudo add-apt-repository ppa:longsleep/golang-backports
     sudo apt-get update
     sudo apt-get install golang-go
@@ -107,10 +146,8 @@ install_go() {
 }
 
 install_tmux() {
-  if ! type tmux 2>/dev/null ; then
-    sudo apt install -y tmux
-    ~/.tmux/plugins/tpm/bin/install_plugins
-  fi
+  install_package tmux
+  ~/.tmux/plugins/tpm/bin/install_plugins
 }
 
 list_apps() {
