@@ -57,7 +57,7 @@ base_setup() {
 
   if ! [ -d $HOME/.homesick/repos/homeshick ]; then
     echo "Installing homeshick"
-    git clone git://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
+    git clone https://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
   fi
   source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 
