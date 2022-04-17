@@ -69,9 +69,19 @@ base_setup() {
   fi
 
   install_package inotifywatch --apt inotify-tools || true
-  install_package ag --apt silversercher-ag || true
+  install_package ag --apt silversearcher-ag || true
   install_package socat || true
 
+}
+
+install_ssh_authorized_keys() {
+  if ! grep -q bgahagan ~/.ssh/authorized_keys > /dev/null ; then
+    mkdir -p ~/.ssh
+    curl -sSf https://gahagan.ca/bgahagan_authorized_keys >> ~/.ssh/authorized_keys
+  fi
+}
+
+install_gpg() {
   if install_package gpg; then
     if ! gpg -k bgahagan >/dev/null ; then
       curl -sSf https://gahagan.ca/bgahagan.gpg | gpg --import
@@ -149,6 +159,17 @@ install_go() {
 install_tmux() {
   install_package tmux
   ~/.tmux/plugins/tpm/bin/install_plugins
+}
+
+install_ssh_agent_auth() {
+  install_package libpam-ssh-agent-auth
+
+  if ! [ -f /etc/sudoers.d/00_SSH_AGENT_AUTH ]; then
+    echo "Defaults env_keep += SSH_AUTH_SOCK" | sudo tee /etc/sudoers.d/00_SSH_AGENT_AUTH
+    sudo chmod 0440 /etc/sudoers.d/00_SSH_AGENT_AUTH
+    sudo sed -i.ssh_agent_auth_bak -e 's|@include common-auth|auth sufficient pam_ssh_agent_auth.so file=~/.ssh/authorized_k
+eys\n\0|' /etc/pam.d/sudo
+  fi
 }
 
 list_apps() {
