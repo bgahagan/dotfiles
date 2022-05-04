@@ -6,3 +6,7 @@ TAG=${1:?specify tag}
 REMOTE=${2:?specify remote host}
 
 docker save "$TAG" | bzip2 | pv | ssh "$REMOTE" 'bunzip2 | docker load'
+
+if docker -v | grep -q podman; then
+  ssh "$REMOTE" "docker tag localhost/$TAG $TAG"
+fi
