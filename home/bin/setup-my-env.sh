@@ -54,6 +54,7 @@ base_setup() {
   install_package git
   install_package wget
   install_package curl
+  install_package file
 
   if ! [ -d $HOME/.homesick/repos/homeshick ]; then
     echo "Installing homeshick"
