@@ -22,6 +22,11 @@ install_package() {
         shift # past argument
         shift # past value
         ;;
+      -p|--pacman)
+        pacman_package="$2"
+        shift # past argument
+        shift # past value
+        ;;
       *)    # unknown option
         POSITIONAL+=("$1") # save it in an array for later
         shift # past argument
@@ -34,8 +39,10 @@ install_package() {
 
   if ! type $executable &>/dev/null ; then
     echo "Intalling $executable"
-    if type apt; then
+    if type apt &>/dev/null ; then
       sudo apt install -y ${apt_package:-$executable}
+    elif type pacman &>/dev/null ; then
+      sudo pacman --noconfirm -S ${pacman_package:-$executable}
     fi
     if ! type $executable &>/dev/null ; then
       echo "ERROR: $executable: could not intall"
@@ -69,8 +76,8 @@ base_setup() {
     echo "source ~/.bashrc.common" >> ~/.bashrc
   fi
 
-  install_package inotifywatch --apt inotify-tools || true
-  install_package ag --apt silversearcher-ag || true
+  install_package inotifywatch --apt inotify-tools --pacman inotify-tools || true
+  install_package ag --apt silversearcher-ag --pacman the_silver_searcher|| true
   install_package socat || true
 
 }

@@ -40,6 +40,13 @@ export EDITOR=vim
 
 export BC_ENV_ARGS="$HOME/.bc"
 
+pathadd() {
+  if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+    PATH="${PATH:+"$PATH:"}$1"
+  fi
+}
+pathadd ~/bin
+
 # Enable gpg ssh agent
 #if [ -z "$SSH_AUTH_SOCK" ] && type gpg-connect-agent > /dev/null; then
 #  gpg-connect-agent /bye
