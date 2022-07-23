@@ -1,0 +1,3 @@
+#!/bin/sh
+
+dbus-send --dest=org.freedesktop.PowerManagement --print-reply=literal /org/freedesktop/PowerManagement/Inhibit org.freedesktop.PowerManagement.Inhibit.GetInhibitors

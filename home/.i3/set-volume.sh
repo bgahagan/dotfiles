@@ -5,6 +5,8 @@ if [ -z "$1" ] ; then
 	exit 1
 fi
 
-amixer sset Master $1
+MIXER=PCM
 
-notify-send -h STRING:synchronous:volume "Volume $(amixer sget Master | egrep -o '[0-9]+%' | head -n 1)"
+amixer sset $MIXER $1
+
+notify-send -h STRING:synchronous:volume "Volume $(amixer sget $MIXER | egrep -o '[0-9]+%' | head -n 1)"

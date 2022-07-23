@@ -24,16 +24,16 @@ bindsym $mod+n border normal
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font xft:URWGothic-Book 16
+font xft:URWGothic-Book 12
 
 # Use Mouse+$mod to drag floating windows
 floating_modifier $mod
 
 ## Launch // Terminal // <> Enter ##
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec terminal
 
 ## Launch // Firefox // <><Shift> Enter ##
-bindsym $mod+Shift+Return exec firefox-developer-edition -P bryan
+bindsym $mod+Shift+Return exec firefox -P bryan
 bindsym $mod+Shift+Ctrl+Return exec firefox -P private
 
 ## Launch // Dmenu // <> d ##
@@ -75,12 +75,13 @@ bindsym $mod+F5 exec terminal -e 'mocp'
 bindsym $mod+t exec --no-startup-id pkill compton
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
-bindsym Print exec --no-startup-id i3-scrot
-bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
+#bindsym Print exec --no-startup-id i3-scrot
+#bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
+#bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
 bindsym $mod+p --release $run /home/bryan/src/uber-context/uc.sh menu -w
-bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
 bindsym $mod+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
+bindsym $mod+Print --release exec --no-startup-id /home/bryan/bin/screenshot
 
 # focus_follows_mouse no
 #
@@ -111,23 +112,11 @@ bindsym $mod+8 workspace $ws8
 bindsym $mod+Ctrl+Right workspace next
 bindsym $mod+Ctrl+Left workspace prev
 
-# Navigate // Window Focus // <> k j h l ##
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
-
 ## Navigate // Window // <> ↑ ↓ ← → ##
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
-
-# Modify // Move Window // <><Shift> k j h l ##
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
 
 ## Modify // Move Window // <><Shift> ↑ ↓ ← → ##
 bindsym $mod+Shift+Left move left
@@ -312,11 +301,11 @@ mode "Resize" {
 bindsym $mod+r mode "Resize"; $run alluvium --mode Resize --quit-on-default
 
 # Lock screen
-bindsym $mod+9 exec --no-startup-id blurlock
+bindsym $mod+l exec --no-startup-id blurlock
 
 # Autostart applications
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; compton -b
+#exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+#exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 #exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
@@ -324,12 +313,13 @@ exec --no-startup-id pamac-tray
 exec --no-startup-id clipit
 # exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
-exec --no-startup-id start_conky_maia
+# exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
 # exec --no-startup-id xautolock -time 10 -locker blurlock
-exec --no-startup-id xset dpms 300
+#exec --no-startup-id xset dpms 300 # managed through xfce4-power-manager-settings
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
+exec_always --no-startup-id autotiling
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
@@ -365,9 +355,10 @@ set_from_resource $term_color15    color15
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
   output primary
-	i3bar_command i3bar
-	status_command ~/.i3/i3status.sh
-	position bottom
+  i3bar_command i3bar
+# status_command ~/.i3/i3status.sh
+  status_command i3status --config ~/.i3/i3status.conf
+  position bottom
 
 ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
 	tray_output primary
@@ -392,30 +383,30 @@ bar {
     }
 }
 
-bar {
-  output DVI-D-0
-  output DP-4
-  output HDMI-A-0
-  tray_output none
-  i3bar_command i3bar
-  status_command i3status --config ~/.i3/i3status-small.conf
-  position bottom
-  font xft:URWGothic-Book 10
+#bar {
+#  output DVI-D-0
+#  output DP-4
+#  output HDMI-A-0
+#  tray_output none
+#  i3bar_command i3bar
+#  status_command i3status --config ~/.i3/i3status-small.conf
+#  position bottom
+#  font xft:URWGothic-Book 10
 
-    colors {
-        background #222D31
-        statusline #F9FAF9
-        separator  #454947
+#    colors {
+#        background #222D31
+#        statusline #F9FAF9
+#        separator  #454947
 
 #                      border  backgr. text
-        focused_workspace  #F9FAF9 #16a085 #292F34
-        active_workspace   #595B5B #353836 #FDF6E3
-        inactive_workspace #595B5B #222D31 #EEE8D5
-        binding_mode       #16a085 #2C2C2C #F9FAF9
-        urgent_workspace   #16a085 #FDF6E3 #E5201D
-    }
+#        focused_workspace  #F9FAF9 #16a085 #292F34
+#        active_workspace   #595B5B #353836 #FDF6E3
+#        inactive_workspace #595B5B #222D31 #EEE8D5
+#        binding_mode       #16a085 #2C2C2C #F9FAF9
+#        urgent_workspace   #16a085 #FDF6E3 #E5201D
+#    }
 
-}
+#}
 
 
 # hide/unhide i3status bar

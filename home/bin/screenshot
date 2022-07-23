@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -x
+set -euo pipefail
+
+F=$(mktemp --tmpdir scrot.XXXXX).png
+
+scrot -s -f -F "$F"
+pngquant -o "$F.min" "$F"
+rm "$F"
+F="$F.min"
+xclip -selection clipboard -t image/png -i "$F"
+rm "$F"
