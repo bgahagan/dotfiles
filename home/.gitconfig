@@ -19,6 +19,9 @@
   di = diff --word-diff=color --stat -p
   delete-branch = !git branch -d $1 && git push origin --delete $1
   force-delete-branch = !git branch -D $1 && git push origin --delete $1
+  sync = !git checkout --quiet HEAD && git fetch origin master:master && git checkout --quiet -
+  br = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+
 
 [color]
   ui = auto
