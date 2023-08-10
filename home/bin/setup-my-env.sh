@@ -170,13 +170,11 @@ install_tmux() {
 }
 
 install_ssh_agent_auth() {
-  install_package libpam-ssh-agent-auth
-
   if ! [ -f /etc/sudoers.d/00_SSH_AGENT_AUTH ]; then
+    install_package libpam-ssh-agent-auth || true
     echo "Defaults env_keep += SSH_AUTH_SOCK" | sudo tee /etc/sudoers.d/00_SSH_AGENT_AUTH
     sudo chmod 0440 /etc/sudoers.d/00_SSH_AGENT_AUTH
-    sudo sed -i.ssh_agent_auth_bak -e 's|@include common-auth|auth sufficient pam_ssh_agent_auth.so file=~/.ssh/authorized_k
-eys\n\0|' /etc/pam.d/sudo
+    sudo sed -i.ssh_agent_auth_bak -e 's|@include common-auth|auth sufficient pam_ssh_agent_auth.so file=~/.ssh/authorized_keys\n\0|' /etc/pam.d/sudo
   fi
 }
 
