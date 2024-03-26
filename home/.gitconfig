@@ -5,14 +5,22 @@
   ci = commit
   ca = commit --amend
   co = checkout
+  com = !git checkout $(git local-head)
   st = status -sb
   serve = instaweb -d webrick # requires ruby, leaves server process hanging around
   out = !git fetch && git log FETCH_HEAD..master
   in = !git fetch && git log master..FETCH_HEAD
   vdiff = difftool -y
+  remote-head = !git branch -rl | sed -nE 's|^\\W+(origin/master\\|origin/main)$|\\1|p'
+  local-head = !git branch -rl | sed -nE 's|^\\W+origin/(master\\|main)$|\\1|p'
+  bump = !yarn latest && git ci -am bump
+  fr = !git fetch && git rebase -i $(git remote-head)
+  up = !git com && git pr
   pr = pull --rebase
   pa = push --all
   pp = !git pr && git push
+  ppr = !git push && gh pr create -f
+  prm = !gh pr merge -sd --auto
   unstash = stash pop
   lg = log --graph --date=short --pretty=format:'%C(green)%cd %C(auto)%h%d %s %C(bold blue)<%an>%C(reset)' --abbrev-commit
   lgtime = log --author=bgahagan --reverse --stat
