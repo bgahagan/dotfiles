@@ -142,6 +142,20 @@ install_hub() {
   fi
 }
 
+install_gh() {
+  if ! type gh &>/dev/null ; then 
+    echo "Installing gh"
+    wget 'https://github.com/cli/cli/releases/download/v2.21.2/gh_2.21.2_linux_amd64.tar.gz' -O /tmp/gh.tgz
+    mkdir /tmp/gh
+    cd /tmp/gh
+    tar -xvf /tmp/gh.tgz
+    mv /tmp/gh/gh*/bin/gh ~/bin/gh
+    chmod u+x ~/bin/gh
+    rm /tmp/gh.tgz
+    rm -r /tmp/gh
+  fi
+}
+
 install_node() {
   install_package make || true
   if ! type n &>/dev/null ; then 
