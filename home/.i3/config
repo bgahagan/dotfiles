@@ -82,6 +82,7 @@ bindsym $mod+p --release $run /home/bryan/src/uber-context/uc.sh menu -w
 bindsym $mod+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 bindsym $mod+Print --release exec --no-startup-id /home/bryan/bin/screenshot
+bindsym $mod+Ctrl+Print --release exec --no-startup-id /home/bryan/bin/screencap
 
 # focus_follows_mouse no
 #
@@ -321,6 +322,10 @@ exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 exec_always --no-startup-id autotiling
 
+#exec_always --no-startup-id xrandr --output DisplayPort-0 --mode 3840x2160 --rate 143.96 --output DisplayPort-1 --auto --left-of DisplayPort-0 --rotate left
+exec_always --no-startup-id xrandr --output DisplayPort-0 --mode 3840x2160 --rate 143.96 --pos 1080x0 --output DisplayPort-1 --mode 3840x2160 --rate 60 --pos 0x0 --rotate left --scale 0.5
+
+
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
 # https://i3wm.org/docs/userguide.html#xresources
@@ -383,30 +388,28 @@ bar {
     }
 }
 
-#bar {
-#  output DVI-D-0
-#  output DP-4
-#  output HDMI-A-0
-#  tray_output none
-#  i3bar_command i3bar
-#  status_command i3status --config ~/.i3/i3status-small.conf
-#  position bottom
-#  font xft:URWGothic-Book 10
+bar {
+  output DisplayPort-1
+  tray_output none
+  i3bar_command i3bar
+  status_command i3status --config ~/.i3/i3status-small.conf
+  position bottom
+  font xft:URWGothic-Book 14
 
-#    colors {
-#        background #222D31
-#        statusline #F9FAF9
-#        separator  #454947
+    colors {
+        background #222D31
+        statusline #F9FAF9
+        separator  #454947
 
 #                      border  backgr. text
-#        focused_workspace  #F9FAF9 #16a085 #292F34
-#        active_workspace   #595B5B #353836 #FDF6E3
-#        inactive_workspace #595B5B #222D31 #EEE8D5
-#        binding_mode       #16a085 #2C2C2C #F9FAF9
-#        urgent_workspace   #16a085 #FDF6E3 #E5201D
-#    }
+        focused_workspace  #F9FAF9 #16a085 #292F34
+        active_workspace   #595B5B #353836 #FDF6E3
+        inactive_workspace #595B5B #222D31 #EEE8D5
+        binding_mode       #16a085 #2C2C2C #F9FAF9
+        urgent_workspace   #16a085 #FDF6E3 #E5201D
+    }
 
-#}
+}
 
 
 # hide/unhide i3status bar

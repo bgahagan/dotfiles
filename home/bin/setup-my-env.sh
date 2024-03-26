@@ -143,7 +143,7 @@ install_hub() {
 }
 
 install_node() {
-  install_package gmake --apt make || true
+  install_package make || true
   if ! type n &>/dev/null ; then 
     echo "Installing n (node version manager)"
     curl -sSf -L https://git.io/n-install | bash -s -- latest
