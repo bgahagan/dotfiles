@@ -61,3 +61,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 fix_ssh_env() {
   eval $(tmux show-env -s |grep '^SSH_')
 }
+
+get_clip() {
+  xclip -o -selection clipboard
+}

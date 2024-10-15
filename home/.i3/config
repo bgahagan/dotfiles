@@ -61,6 +61,13 @@ bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 bindsym $mod+Control+Up $run ~/.i3/set-volume.sh 5%+
 bindsym $mod+Control+Down $run ~/.i3/set-volume.sh 5%-
 
+# Media player controls
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioPlayPause exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
 # Screen brightness controls
 # bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
 # bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
@@ -323,7 +330,7 @@ exec_always --no-startup-id fix_xcursor
 exec_always --no-startup-id autotiling
 
 #exec_always --no-startup-id xrandr --output DisplayPort-0 --mode 3840x2160 --rate 143.96 --output DisplayPort-1 --auto --left-of DisplayPort-0 --rotate left
-exec_always --no-startup-id xrandr --output DisplayPort-0 --mode 3840x2160 --rate 143.96 --pos 1080x0 --output DisplayPort-1 --mode 3840x2160 --rate 60 --pos 0x0 --rotate left --scale 0.5
+exec_always --no-startup-id xrandr --output DisplayPort-0 --mode 3840x2160 --rate 143.96 --output DisplayPort-1 --mode 3840x2160 --rate 60 --right-of DisplayPort-0 --rotate right --scale 0.5
 
 
 # Color palette used for the terminal ( ~/.Xresources file )
