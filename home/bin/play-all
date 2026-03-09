@@ -1,0 +1,5 @@
+#!/bin/bash
+
+OFFSET=${1:-1}
+
+ls -1t | grep -v part | tail -n +${OFFSET} | head -n 100 | xargs mpv --wid=$WINDOWID

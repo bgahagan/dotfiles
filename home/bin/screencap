@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -euo pipefail
+
+PID_FILE=/tmp/screencap.pid
+
+if [ -r "$PID_FILE" ] ; then
+  echo "Killing existing session"
+  kill $(cat "$PID_FILE") || true
+  rm "$PID_FILE"
+  exit
+fi
+
+cleanup() {
+  rm "$PID_FILE"
+}
+
+F=$(mktemp --tmpdir screencap-XXXXX.mp4)
+
+source <(xdotool getactivewindow getwindowgeometry --shell)
+
+ffmpeg -f x11grab -framerate 25 -show_region 1 -window_id "$WINDOW" -i "$DISPLAY".0 -y "$F" &
+echo "$!" > "$PID_FILE"
+
+trap cleanup EXIT
+wait
